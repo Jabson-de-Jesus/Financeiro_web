@@ -11,10 +11,23 @@ if (isset($_GET['cod']) && $_GET['cod'] != '' && is_numeric($_GET['cod'])) {
 
         header('location: categoria_consultar.php');
     }
-   } else {
+} else if (isset($_POST['btnalterar'])) {
+    
+    $cod = $_POST['cod'];
+    $nome = $_POST['nome_categoria'];
+    
+    $dao = new Categoriadao();
+    
+    $ret = $dao->Alterarcategoria($nome, $cod);
+    
+    header('location: categoria_consultar.php?ret='. $ret);
+    
+} else if (isset($_POST['btnexcluir'])) {
+    
+} else {
 
     header('location: categoria_consultar.php');
-    }
+}
 ?>
 
 ﻿<!DOCTYPE html>
@@ -48,13 +61,14 @@ if (isset($_GET['cod']) && $_GET['cod'] != '' && is_numeric($_GET['cod'])) {
                     <!-- /. ROW  -->
                     <hr />
                     <form method="post" action="Categoria_alterar.php">
-                        <div class="form-group">
-                            <label>Nome da Categoria</label>
-                            <input class="form-control" placeholder="Digite aqui" name="categoria_alterar" id="nome" value="<?= $dados[0]['nome_categoria'] ?>"   />
-                        </div>
+                        <input type="hidden" name="cod" value="<?= $idcategoria ?>" > 
+                            <div class="form-group">
+                                <label>Nome da Categoria</label>
+                                <input class="form-control"  name="nome_categoria"  value="<?= $dados[0]['nome_categoria'] ?>"   />
+                            </div>
 
-                        <button type="submit" class="btn btn-success" name="btncadastrar" onclick="return ValidarCampos()">Alterar</button>
-                        <button type="submit" class="btn btn-danger" onclick="return ValidarCampos()">Excluir</button>
+                            <button type="submit" class="btn btn-success" name="btnalterar">Alterar</button>
+                            <button type="submit" class="btn btn-danger" name="btnexcluir">Excluir</button>
                     </form>               
                 </div>
                 <!-- /. PAGE INNER  -->

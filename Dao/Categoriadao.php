@@ -36,6 +36,23 @@ class Categoriadao extends Conexao {
         if (trim($nome) == '') {
             return 0;
         }
+        $conexao = parent::retornaConexao();
+        $comando = 'update tb_categoria set nome_categoria = ? where id_categoria = ? and id_usuario = ?';
+        $sql =  new PDOStatement();
+        $sql = $conexao->prepare($comando);
+        
+        $sql->bindValue(1, $nome);
+        $sql->bindValue(2, $cod);
+        $sql->bindvalue(3, Ultildao::Codigologado());
+        
+        try {
+           $sql->execute();
+           
+           return 1;
+        } catch (Exception $ex) {
+            return -1;
+        }
+        
     }
 
     public function Consultarcategoria() {

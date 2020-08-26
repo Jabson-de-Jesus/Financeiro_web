@@ -1,9 +1,11 @@
 <?php
 require_once '../Dao/Categoriadao.php';
+require_once './_Msg.php';
 
 $objdao = new Categoriadao();
 
 $categoria = $objdao->Consultarcategoria();
+  
 
 
 ?>
@@ -23,6 +25,11 @@ $categoria = $objdao->Consultarcategoria();
                 <div id="page-inner">
                     <div class="row">
                         <div class="col-md-12">
+                            <?php 
+                                  if(isset($_GET['ret']))
+                                      exibirmsg($_GET['ret']);
+                               
+                            ?>
                             <h2>Consultar Categoria</h2>   
                             <h5>Aqui você Consulta / Altera sua Categoria </h5>
 
@@ -44,7 +51,7 @@ $categoria = $objdao->Consultarcategoria();
                                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                 <thead>
                                                     <tr>
-                                                        <th>Codigo</th>
+                                                       
                                                         <th>Nome</th>
                                                         <th>Ação</th>
 
@@ -55,7 +62,7 @@ $categoria = $objdao->Consultarcategoria();
                                                     <?php for ($i = 0; $i < count($categoria); $i++) { ?>
 
                                                         <tr class="odd gradeX">
-                                                            <td> <?= $categoria[$i]['id_categoria'] ?>  </td>
+                                                          
                                                             <td> <?= $categoria[$i]['nome_categoria'] ?></td>
 
                                                             <td>

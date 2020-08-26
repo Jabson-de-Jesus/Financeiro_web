@@ -1,18 +1,50 @@
 <?php
 include_once '../Dao/Contadao.php';
-include_once './_Msg.php';
 
-if (isset($_POST['btncadastrar'])) {
+function tipoconta($tipocont) {
+    if ($tipocont == 0) {
+        return $tipocont = 'Conta Poupança';
+    } else {
+        return$tipocont = 'Conta Corrente';
+    }
+}
+
+function tipocont1($tipoconta) {
+    if ($tipoconta != 1) {
+        return $tipoconta = 'Conta Corrente';
+    } else {
+        return $tipoconta = 'Conta Poupança';
+    }
+}
+function retornavalor1($num) {
+    if($num == 1){
+        return $num = 1;
+    }else{
+         return $num = 0;
+    }
     
-    $conta = $_POST['conta'];
-    $banco = $_POST['banco'];
-    $saldoconta = $_POST['saldoconta'];
-    $tipoconta = $_POST['tipoconta'];
-    $cod = 1;
+}
 
-    $objdao = new Contadao();
+function retornavalor($num) {
+    if ($num == 0) {
+        return $num = 0;
+    } else {
+        return $num = 1;
+    }
+}
 
-    $resul = $objdao->alterarconta($cod, $conta, $banco, $saldoconta, $tipoconta);
+if (isset($_GET['cod']) && $_GET['cod'] != '' && is_numeric($_GET['cod'])) {
+    $dao = new Contadao();
+    $idconta = $_GET['cod'];
+
+    $dados = $dao->Detalheconta($idconta);
+    if (count($dados) == 0) {
+
+        header('location: conta_consultar.php');
+    }
+} else {
+
+    header('location: conta_consultar.php');
 }
 ?>
 ﻿<!DOCTYPE html>
@@ -48,25 +80,27 @@ if (isset($_POST['btncadastrar'])) {
                     <form method="post" action="Conta_alterar.php">
                         <div class="form-group">
                             <label>Numero da conta</label>
-                            <input class="form-control" placeholder="Digite aqui" name="conta" id="conta"/>
+                            <input class="form-control" placeholder="Digite aqui" name="conta" id="conta" value=<?= $dados[0]['numero_conta'] ?> />
                         </div>
                         <div class="form-group">
                             <label>Nome da Banco</label>
-                            <input class="form-control" placeholder="Digite aqui" name="banco" id="banco" />
+                            <input class="form-control" placeholder="Digite aqui" name="banco" id="banco" value=<?= $dados[0]['banco_conta'] ?> />
                         </div>
                         <div class="form-group">
                             <label>Saldo da Conta</label>
-                            <input class="form-control" placeholder="Digite aqui" name="saldoconta" id="saldoconta" />
+                            <input class="form-control" placeholder="Digite aqui" name="saldoconta" id="saldoconta" value=<?= $dados[0]['saldo_conta'] ?>  />
                         </div>
                         <div class="form-group">
-                            <label>tipo de Conta</label>
-                            <select class="form-control" id="tipoconta" name="tipoconta">
-                                <option value="">Selecione</option>
-                                <option value="1">Conta Corrente</option>
-                                <option value="2">Conta poupança</option>
+
+                            <select class="form-control" name="tipoconta">
+
+                                <option value="<?= retornavalor($dados[0]['tipo_conta']) ?>"><?= tipoconta($dados[0]['tipo_conta']) ?> </option>
+                                <option value="<?= retornavalor1($dados[0]['tipo_conta']) ?>"> <?= tipocont1($dados[0]['tipo_conta']) ?> </option>
+                            </select>
+
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-success" name="btncadastrar" onclick="return ValidarCampos123()">Alterar</button>
+                        <button type="submit" class="btn btn-success" name="btnalterar" onclick="return ValidarCampos123()">Alterar</button>
                         <button type="submit" class="btn btn-danger" onclick="return  ValidarCampos()" >Excluir</button>
                 </div>
                 <!-- /. PAGE INNER  -->

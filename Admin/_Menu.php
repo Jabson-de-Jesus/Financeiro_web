@@ -36,7 +36,7 @@
                         <a href="Conta_nova.php">Nova Conta</a>
                     </li>
                     <li>
-                        <a href="Conta_alterar.php">Consultar / Alterar Conta</a>
+                        <a href="Conta_consultar.php">Consultar / Alterar Conta</a>
                     </li>
                 </ul>
             </li>

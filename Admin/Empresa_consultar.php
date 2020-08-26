@@ -1,7 +1,11 @@
-<?php  
-    
- include_once '';
- 
+<?php
+include_once '../Dao/Empresadao.php';
+include_once './_Msg.php';
+
+$objdao = new Empresadao();
+
+$empresa = $objdao->Consultarempresa();
+
 
 ?>
 
@@ -37,37 +41,47 @@
                                 <div class="panel-heading">
                                     Empresas Cadastradas
                                 </div>
+
                                 <div class="panel-body">
                                     <div class="table-responsive">
-                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                            <thead>
-                                                <tr>
-                                                    <th>Nome</th>
-                                                    <th>Endereço</th>
-                                                    <th>Telefone</th>
-                                                    <th>Ação</th>
+                                        <form method="post" action="Empresa_consultar.php">
+                                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                                <thead>
+                                                    <tr>
+
+                                                        <th>Nome</th>
+                                                        <th>Endereço</th>
+                                                        <th>Telefone</th>
+                                                        <th>Ação</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
                                                     
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                
-                                                <tr class="odd gradeX">
-                                                    <td>Nome</td>
-                                                    <td>Endereço</td>
-                                                    <td>Telefone</td>
-                                                    <td>
-                                                        <a  href="Empresa_alterar.php" class="btn btn-warning btn-xs" >Alterar</a>
-                                                    </td>
-                                                    
-                                                </tr>
-                                               
-                                                
-                                            </tbody>
-                                        </table>
+                                                       <?php for ($i = 0; $i < count($empresa); $i++) { ?>
+                                                        <tr class="odd gradeX">
+
+                                                            <td><?= $empresa[$i]['nome_empresa'] ?> </td>
+                                                            <td><?= $empresa[$i]['telefone_empresa'] ?> </td>
+                                                            <td><?= $empresa[$i]['endereco_empresa'] ?> </td>
+                                                            <td>
+                                                                <a  href="Empresa_alterar.php?cod=<?= $empresa[$i]['id_empresa']?>" class="btn btn-warning btn-xs" >Alterar</a>
+                                                            </td>
+
+                                                        </tr>
+
+                                                       <?php } ?>
+
+                                                </tbody>
+                                            </table>
+                                        </form>    
                                     </div>
 
                                 </div>
+
                             </div>
+
                             <!--End Advanced Tables -->
                         </div>
                     </div>
